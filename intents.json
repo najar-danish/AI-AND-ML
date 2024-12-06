@@ -2,6 +2,7 @@
     {
         "tag": "greeting",
         "patterns": [
+            "hii",
             "Hi",
             "Hello",
             "Hey",
