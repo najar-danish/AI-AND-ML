@@ -1,19 +1,5 @@
 [
     {
-        "tag": "spellcheck",
-        "patterns":[
-            "qwerty",
-            "abcde",
-            "sda",
-            "qsdft",
-            "zxcv",
-        ],
-        "response":[
-            "sorry,i don't understand",
-            "sorry,can you repeat again!",
-        ]
-    },
-    {
         "tag": "greeting",
         "patterns": [
             "hii",
