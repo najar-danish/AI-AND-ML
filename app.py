@@ -8,6 +8,55 @@ import streamlit as st
 import random
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
+import json
+import random
+import re
+
+# Load the intents file
+with open("intents.json") as file:
+    intents = json.load(file)
+
+# Preprocessing: Function to detect gibberish
+def is_meaningless(user_input):
+    # Define meaningless input patterns
+    gibberish_patterns = [
+        r'^[a-zA-Z]*$',  # Only alphabets
+        r'(.+?)\1+',    # Repeated characters
+        r'[aeiouAEIOU]{0,}',  # Words without vowels
+    ]
+    for pattern in gibberish_patterns:
+        if re.fullmatch(pattern, user_input):
+            return True
+    return False
+
+# Function to get a response
+def get_response(user_input):
+    # Check if input is meaningless
+    if is_meaningless(user_input):
+        for intent in intents["intents"]:
+            if intent["tag"] == "unrecognized":
+                return random.choice(intent["responses"])
+    
+    # Check for matching patterns
+    for intent in intents["intents"]:
+        for pattern in intent["patterns"]:
+            if pattern.lower() in user_input.lower():
+                return random.choice(intent["responses"])
+
+    # Default fallback response for unrecognized input
+    for intent in intents["intents"]:
+        if intent["tag"] == "unrecognized":
+            return random.choice(intent["responses"])
+
+# Test the chatbot
+while True:
+    user_input = input("You: ")
+    if user_input.lower() == "exit":
+        print("Chatbot: Goodbye!")
+        break
+    response = get_response(user_input)
+    print(f"Chatbot: {response}")
+
 
 
 ssl._create_default_https_context = ssl._create_unverified_context
