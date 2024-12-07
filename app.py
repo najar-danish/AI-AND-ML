@@ -8,6 +8,36 @@ import streamlit as st
 import random
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
+import re
+from spellchecker import SpellChecker
+
+# Initialize spell checker
+spell = SpellChecker()
+
+def clean_input(user_input):
+    # Remove non-alphanumeric characters and extra spaces
+    cleaned_input = re.sub(r'[^a-zA-Z0-9\s]', '', user_input)
+    
+    # Check for unrecognized words
+    words = cleaned_input.split()
+    corrected_words = [spell.correction(word) for word in words]  # Correct spelling
+    return ' '.join(corrected_words)
+
+def chatbot_response(user_input):
+    cleaned_input = clean_input(user_input)
+    
+    # Simulate a simple intent recognition
+    recognized_intents = ["greet", "weather", "joke"]
+    
+    if any(intent in cleaned_input.lower() for intent in recognized_intents):
+        return "Sure, I can help with that!"
+    else:
+        return "Sorry, I didn't understand that. Can you rephrase?"
+
+# Example usage
+user_input = "asdfg 1234!@#"
+print(chatbot_response(user_input))  # Output: "Sorry, I didn't understand that. Can you rephrase?"
+
 
 ssl._create_default_https_context = ssl._create_unverified_context
 nltk.data.path.append(os.path.abspath("nltk_data"))
