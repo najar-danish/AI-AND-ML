@@ -1,5 +1,21 @@
 [
     {
+      "tag": "unrecognized",
+      "patterns": [
+        "asdfg",
+        "qwerty",
+        "zxvcbn",
+        "????",
+        "12345",
+        "random meaningless input"
+      ],
+      "responses": [
+        "I'm sorry, I didn't understand that. Could you please rephrase?",
+        "That doesn't seem to make sense. Can you clarify?",
+        "Hmm, I didn't catch that. Try saying it differently."
+      ]
+    },
+    {
         "tag": "greeting",
         "patterns": [
             "hii",
